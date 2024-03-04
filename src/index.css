@@ -1,0 +1,9 @@
+/* index.css */
+@font-face {
+  font-family: 'MyFont';
+  src: url('./assets/fonts/Vegur-Regular.otf') format('opentype');
+}
+
+body {
+  font-family: 'MyFont';
+}
