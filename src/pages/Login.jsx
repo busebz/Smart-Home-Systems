@@ -5,17 +5,17 @@ import {
   TextField,
   Button,
   Switch,
-  useMediaQuery,
+  useMediaQuery
 } from "@mui/material";
 
 import coverphoto from "../assets/coverphoto.png";
-
-import theme from "../theme"
+import theme from "../theme";
 
 function Login() {
   const colors = theme.palette;
 
   const isSmallScreen = useMediaQuery("(max-width:600px)");
+  const isLargeScreen = useMediaQuery("(min-width:1200px)");
   const [checked, setChecked] = React.useState();
 
   return (
@@ -25,10 +25,10 @@ function Login() {
         justifyContent: "space-between",
         alignItems: "center",
         width: "100%",
-        height: "100vh",
+        height: isSmallScreen ? "100%" : "100vh",
         overflow: isSmallScreen ? "" : "hidden",
         flexDirection: isSmallScreen ? "column" : "row",
-        background: `linear-gradient(${colors.blue[900]},${colors.blue[900]})`
+        background: `linear-gradient(${colors.blue[900]},${colors.blue[900]})`,
       }}
     >
       <Box
@@ -47,11 +47,16 @@ function Login() {
       <Box
         flex="0 0 50%"
         sx={{
-          width: "100%",
-          marginLeft: isSmallScreen ? "50%" : "60px",
+          marginLeft: isSmallScreen ? "" : "60px",
+          width: isLargeScreen ? "50%" : "80%",
         }}
       >
-        <form style={{ width: "40%" }}>
+        <form
+          style={{
+            width: isSmallScreen ? "100%" : "50%",
+            marginX: "auto",
+          }}
+        >
           <Box
             sx={{
               marginY: "30px",
@@ -65,28 +70,35 @@ function Login() {
             >
               Nice to see you, sir!
             </Typography>
-            <Typography variant="subtitle2">
+            <Typography variant="subtitle1">
               Enter your email and password to sign in
             </Typography>
           </Box>
           <Box sx={{ marginY: "15px" }}>
-            <Typography variant="subtitle1">Email</Typography>
+            <Typography variant="h5">Email</Typography>
             <TextField
               label="Your email address"
-              size="small"
               sx={{
                 width: "100%",
+                marginTop:"10px",
+                
                 "& .MuiOutlinedInput-root": {
                   borderRadius: "15px",
                 },
                 "& .MuiInputLabel-root": {
-                  color: "#737999",
-                  fontSize: 11,
+                  color: colors.gray[400],
+                  fontSize: "1.1rem",
                 },
+                "& .MuiInputBase-root": {
+                  color: colors.gray[100],
+                  fontSize: "1.1rem",
+                }
+                
               }}
+              
             ></TextField>
             <Typography
-              variant="subtitle1"
+              variant="h5"
               sx={{
                 marginTop: "15px",
               }}
@@ -95,15 +107,19 @@ function Login() {
             </Typography>
             <TextField
               label="Your password"
-              size="small"
               sx={{
                 width: "100%",
+                marginTop:"10px",
                 "& .MuiOutlinedInput-root": {
                   borderRadius: "15px",
                 },
                 "& .MuiInputLabel-root": {
-                  color: "#737999",
-                  fontSize: 11,
+                  color: colors.gray[400],
+                  fontSize: "1.1rem",
+                },
+                "& .MuiInputBase-root": {
+                  color: colors.gray[100],
+                  fontSize: "1.1rem",
                 },
               }}
             ></TextField>
@@ -126,7 +142,7 @@ function Login() {
                 }}
               />
               <Typography
-                variant="subtitle1"
+                variant="h5"
                 style={{
                   margin: "4px -6px 0px",
                 }}
@@ -137,17 +153,23 @@ function Login() {
           </Box>
           <Button
             variant="contained"
-            color= {colors.blue[300]}
             sx={{
+              backgroundColor: colors.blue[500],
               width: "100%",
               marginBottom: "10px",
               borderRadius: "10px",
-              fontSize: 10,
+              fontSize: 15,
             }}
           >
             Sign in
           </Button>
-          <Typography variant="subtitle2" sx={{ textAlign: "center" }}>
+          <Typography
+            variant="body1"
+            sx={{
+              textAlign: "center",
+              marginBottom: isSmallScreen ? "30px" : "",
+            }}
+          >
             Don't have an account?
             <span style={{ color: colors.gray[100] }}> Sign up? </span>Sorry you
             can't:'(
