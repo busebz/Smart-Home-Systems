@@ -97,57 +97,6 @@ function SideBar() {
                   </Typography>
                 </ListItemText>
               </ListItem>
-              <ListItem
-                component={Link}
-                to="/"
-                sx={{
-                  "&:hover": {
-                    backgroundColor: colors.gray[800],
-                    borderRadius: "10px",
-                  },
-                }}
-              >
-                <img src={build} alt="Build icon" />
-                <ListItemText>
-                  <Typography variant="h4" sx={{ marginLeft: "8px" }}>
-                    Bişi
-                  </Typography>
-                </ListItemText>
-              </ListItem>
-              <ListItem
-                component={Link}
-                to="/"
-                sx={{
-                  "&:hover": {
-                    backgroundColor: colors.gray[800],
-                    borderRadius: "10px",
-                  },
-                }}
-              >
-                <img src={creditcard} alt="Credit Card icon" />
-                <ListItemText>
-                  <Typography variant="h4" sx={{ marginLeft: "8px" }}>
-                    Bişi
-                  </Typography>
-                </ListItemText>
-              </ListItem>
-              <ListItem
-                component={Link}
-                to="/"
-                sx={{
-                  "&:hover": {
-                    backgroundColor: colors.gray[800],
-                    borderRadius: "10px",
-                  },
-                }}
-              >
-                <img src={build} alt="Build icon" />
-                <ListItemText>
-                  <Typography variant="h4" sx={{ marginLeft: "8px" }}>
-                    Bişi
-                  </Typography>
-                </ListItemText>
-              </ListItem>
 
               <Typography
                 variant="h6"
@@ -240,59 +189,6 @@ function SideBar() {
                           sx={{ marginLeft: "8px", overflow: "hidden" }}
                         >
                           Dashboard
-                        </Typography>
-                      </ListItemText>
-                    </ListItem>
-                    <ListItem
-                      component={Link}
-                      to="/"
-                      sx={{
-                        "&:hover": {
-                          backgroundColor: colors.gray[900],
-                          borderRadius: "10px",
-                        },
-                      }}
-                    >
-                      <img src={build} alt="Homepage icon" />
-
-                      <ListItemText>
-                        <Typography variant="h5" sx={{ marginLeft: "8px" }}>
-                          Bişi
-                        </Typography>
-                      </ListItemText>
-                    </ListItem>
-                    <ListItem
-                      component={Link}
-                      to="/"
-                      sx={{
-                        "&:hover": {
-                          backgroundColor: colors.gray[900],
-                          borderRadius: "10px",
-                        },
-                      }}
-                    >
-                      <img src={creditcard} alt="Homepage icon" />
-
-                      <ListItemText>
-                        <Typography variant="h5" sx={{ marginLeft: "8px" }}>
-                          Bişi
-                        </Typography>
-                      </ListItemText>
-                    </ListItem>
-                    <ListItem
-                      component={Link}
-                      to="/"
-                      sx={{
-                        "&:hover": {
-                          backgroundColor: colors.gray[900],
-                          borderRadius: "10px",
-                        },
-                      }}
-                    >
-                      <img src={build} alt="Homepage icon" />
-                      <ListItemText>
-                        <Typography variant="h5" sx={{ marginLeft: "8px" }}>
-                          Bişi
                         </Typography>
                       </ListItemText>
                     </ListItem>
