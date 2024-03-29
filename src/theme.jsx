@@ -54,7 +54,7 @@ const theme = createTheme({
       color: "#edeeed",
     },
     h5: {
-      fontSize: "clamp(15px, 1.2vw, 18px)",
+      fontSize: "clamp(14px, 1.2vw, 18px)",
       color: "#edeeed",
     },
     h6: {
@@ -67,7 +67,7 @@ const theme = createTheme({
     },
     subtitle2: { fontSize: "clamp(14px, 1.4vw, 18px)", color: "#edeeed" },
     body1: {
-      fontSize: "clamp(15px, 1.2vw, 18px)",
+      fontSize: "clamp(14px, 1vw, 18px)",
       color: "#6a7e99",
     },
     body2: {

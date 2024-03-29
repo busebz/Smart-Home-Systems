@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import {
   Box,
@@ -20,34 +20,52 @@ import TopBar from "../components/TopBar";
 import home from "../assets/home.png";
 import theme from "../theme.jsx";
 
+import { useAuth } from "../context/authContext.jsx";
+import axios from "axios";
+
+
+
 function Dashboard() {
+
   const colors = theme.palette;
 
   const isSmallScreen = useMediaQuery("(max-width:600px)");
 
-  const rows = [
-    {
-      ipAddress: { logo: home, address: "216.123.546.879" },
-      modules: { total: "Total:20", active: "Active:14" },
-      owner: "Damla",
-      setupTime: "14/06/2021",
-      phoneNumber: "+90 543 618 92 70",
-    },
-    {
-      ipAddress: { logo: home, address: "216.123.546.879" },
-      modules: { total: "Total:20", active: "Active:14" },
-      owner: "Damla",
-      setupTime: "14/06/2021",
-      phoneNumber: "+90 543 618 92 70",
-    },
-    {
-      ipAddress: { logo: home, address: "216.123.546.879" },
-      modules: { total: "Total:20", active: "Active:14" },
-      owner: "Damla",
-      setupTime: "14/06/2021",
-      phoneNumber: "+90 543 618 92 70",
-    },
-  ];
+  const { token, logout } = useAuth();
+  const [dashboardData, setDashboardData] = useState(null);
+
+  useEffect(() => {
+    const fetchDashboardData = async () => {
+      try {
+        const response = await axios.get(
+          "https://smarthomesolutionserverapi20240318030034.azurewebsites.net/api/home/get",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setDashboardData(response?.data?.value);
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          logout();
+        }
+      }
+    };
+
+    if (token) {
+      fetchDashboardData();
+    }
+  }, [token]);
+
+  function convertDateFormat(dateString) {
+    const date = new Date(dateString);
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+
+    return `${day}/${month}/${year}`;
+  }
 
   return (
     <>
@@ -81,7 +99,7 @@ function Dashboard() {
                   <TableRow>
                     <TableCell
                       sx={{
-                        width: "40%",
+                        width: "45%",
                         borderBottom: "2px solid #323f6a",
                       }}
                     >
@@ -92,6 +110,7 @@ function Dashboard() {
                     <TableCell
                       sx={{
                         borderBottom: "2px solid #323f6a",
+                        minWidth:"60px"
                       }}
                     >
                       <Typography variant="h6" sx={{ color: "#6a7e99" }}>
@@ -102,6 +121,7 @@ function Dashboard() {
                       sx={{
                         textAlign: "center",
                         borderBottom: "2px solid #323f6a",
+                        
                       }}
                     >
                       <Typography variant="h6" sx={{ color: "#6a7e99" }}>
@@ -112,6 +132,7 @@ function Dashboard() {
                       sx={{
                         textAlign: "center",
                         borderBottom: "2px solid #323f6a",
+                       
                       }}
                     >
                       <Typography variant="h6" sx={{ color: "#6a7e99" }}>
@@ -122,6 +143,7 @@ function Dashboard() {
                       sx={{
                         textAlign: "center",
                         borderBottom: "2px solid #323f6a",
+                      
                       }}
                     >
                       <Typography variant="h6" sx={{ color: "#6a7e99" }}>
@@ -131,92 +153,103 @@ function Dashboard() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows.map((row, index) => (
-                    <TableRow
-                      key={row.name}
-                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                    >
-                      <TableCell
+                  {dashboardData &&
+                    dashboardData.map((row, index) => (
+                      <TableRow
+                        key={index}
                         sx={{
-                          borderBottom: "2px solid #323f6a",
+                          "&:last-child td, &:last-child th": { border: 0 },
                         }}
                       >
-                        <div style={{ display: "flex", alignItems: "center" }}>
-                          <img src={row.ipAddress.logo} alt="Home Logo" />
-                          <Typography
-                            variant="h5"
-                            sx={{ margin: "0px 8px 0px" }}
-                          >
-                            {row.ipAddress.address}
-                          </Typography>
-                        </div>
-                      </TableCell>
-                      <TableCell
-                        sx={{
-                          borderBottom: "2px solid #323f6a",
-                        }}
-                      >
-                        <div>
-                          <Typography variant="h5">
-                            {row.modules.total}
-                          </Typography>
-                          <Typography variant="body1">
-                            {row.modules.active}
-                          </Typography>
-                        </div>
-                      </TableCell>
-                      <TableCell
-                        sx={{
-                          textAlign: "center",
-                          color: colors.gray[100],
-                          borderBottom: "2px solid #323f6a",
-                        }}
-                      >
-                        <Button
-                          variant={index % 2 === 0 ? "contained" : "outlined"}
+                        <TableCell
                           sx={{
-                            color: colors.gray[100],
-                            borderColor: colors.gray[100],
-                            boxShadow: "none",
-                            height: "25px",
-                            backgroundColor:
-                              index % 2 === 0
-                                ? colors.green[400]
-                                : "transparent",
-                            borderRadius: "5px",
-                            fontSize: "1.03rem",
-                            textTransform: "capitalize",
-                            "&:hover": {
-                              backgroundColor:
-                                index % 2 === 0
-                                  ? colors.green[600]
-                                  : "transparent",
-                              borderColor: colors.gray[400],
-                            },
+                            borderBottom: "2px solid #323f6a",
+                            
                           }}
                         >
-                          {row.owner}
-                        </Button>
-                      </TableCell>
-                      <TableCell
-                        sx={{
-                          textAlign: "center",
-                          borderBottom: "2px solid #323f6a",
-                        }}
-                      >
-                        <Typography variant="h5">{row.setupTime}</Typography>
-                      </TableCell>
-                      <TableCell
-                        sx={{
-                          textAlign: "center",
-                          borderBottom: "2px solid #323f6a",
-                          minWidth: "100px",
-                        }}
-                      >
-                        <Typography variant="h5">{row.phoneNumber}</Typography>
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                          <div
+                            style={{ display: "flex", alignItems: "center"}}
+                          >
+                            <img src={home} alt="Home Logo" />
+                            <Typography
+                              variant="h5"
+                              sx={{ margin: "0px 8px 0px" }}
+                            >
+                              {row.serverHardwareId}
+                            </Typography>
+                          </div>
+                        </TableCell>
+                        <TableCell
+                          sx={{
+                            borderBottom: "2px solid #323f6a",
+                            
+                          }}
+                        >
+                          <div>
+                            <Typography variant="h5">
+                              Total: {row.totalModuleCount}
+                            </Typography>
+                            <Typography variant="body1">
+                              Active: {row.activeModuleCount}
+                            </Typography>
+                          </div>
+                        </TableCell>
+                        <TableCell
+                          sx={{
+                            textAlign: "center",
+                            color: colors.gray[100],
+                            borderBottom: "2px solid #323f6a",
+                          }}
+                        >
+                          <Button
+                            variant={index % 2 === 0 ? "contained" : "outlined"}
+                            sx={{
+                              color: colors.gray[100],
+                              borderColor: colors.gray[100],
+                              boxShadow: "none",
+                              height: "25px",
+                              backgroundColor:
+                                index % 2 === 0
+                                  ? colors.green[400]
+                                  : "transparent",
+                              borderRadius: "5px",
+                              fontSize: "1.03rem",
+                              textTransform: "capitalize",
+                              "&:hover": {
+                                backgroundColor:
+                                  index % 2 === 0
+                                    ? colors.green[600]
+                                    : "transparent",
+                                borderColor: colors.gray[400],
+                              },
+                            }}
+                          >
+                            {row.ownerName}
+                          </Button>
+                        </TableCell>
+                        <TableCell
+                          sx={{
+                            textAlign: "center",
+                            borderBottom: "2px solid #323f6a",
+                          }}
+                        >
+                          <Typography variant="h5">
+                            {convertDateFormat(row.setupCompletedAt)}
+                          </Typography>
+                        </TableCell>
+                        <TableCell
+                          sx={{
+                            textAlign: "center",
+                            borderBottom: "2px solid #323f6a",
+                            minWidth: "100px",
+                          }}
+                        >
+                          <Typography variant="h5">
+                            {row.auhtorizedMobileNumber}
+                          </Typography>
+                        </TableCell>
+                      </TableRow>
+                    ))}
                 </TableBody>
               </Table>
             </TableContainer>
@@ -244,125 +277,129 @@ function Dashboard() {
               Aktif Evler
             </Typography>
             <Grid container spacing={1} alignItems="center">
-              {rows.map((row, index) => (
-                <Grid item xs={12} key={index}>
-                  <Paper
-                    elevation={3}
-                    sx={{
-                      padding: 2,
-                      borderRadius: 2,
-                      background: `linear-gradient(220deg, ${colors.blue[700]}, ${colors.blue[600]},${colors.blue[700]})`,
+              {dashboardData &&
+                dashboardData.map((row, index) => (
+                  <Grid item xs={12} key={index}>
+                    <Paper
+                      elevation={3}
+                      sx={{
+                        padding: 2,
+                        borderRadius: 2,
+                        background: `linear-gradient(220deg, ${colors.blue[700]}, ${colors.blue[600]},${colors.blue[700]})`,
 
-                      "& .box-item": {
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "flex-start",
-                        borderBottom: "2px solid #323f6a",
-                        padding: "8px 6px 5px",
-                      },
-                    }}
-                  >
-                    <Box className="box-item">
-                      <Typography
-                        variant="h6"
-                        sx={{ color: "#6a7e99", width: "45%" }}
-                      >
-                        Ev Ip Adresi:
-                      </Typography>
-                      <div
-                        style={{
+                        "& .box-item": {
                           display: "flex",
                           alignItems: "center",
-                          width:"80%"
-                        }}
-                      >
-                        <img
-                          src={row.ipAddress.logo}
-                          alt="Home Logo"
-                          style={{ width: "20px", height: "20px" }}
-                        />
+                          justifyContent: "flex-start",
+                          borderBottom: "2px solid #323f6a",
+                          padding: "8px 6px 5px",
+                        },
+                      }}
+                    >
+                      <Box className="box-item">
                         <Typography
-                          sx={{
-                            margin: "0px 3px 0px",
-                            fontSize: "13px",
-                            color: "#edeeed",
-                            
+                          variant="h6"
+                          sx={{ color: "#6a7e99", width: "45%" }}
+                        >
+                          Ev Ip Adresi:
+                        </Typography>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            width: "80%",
                           }}
                         >
-                          {row.ipAddress.address}
+                          <img
+                            src={home}
+                            alt="Home Logo"
+                            style={{ width: "20px", height: "20px" }}
+                          />
+                          <Typography
+                            sx={{
+                              margin: "0px 3px 0px",
+                              fontSize: "13px",
+                              color: "#edeeed",
+                            }}
+                          >
+                            {row.serverHardwareId}
+                          </Typography>
+                        </div>
+                      </Box>
+                      <Box className="box-item">
+                        <Typography
+                          variant="h6"
+                          sx={{ color: "#6a7e99", width: "35%" }}
+                        >
+                          Modules:
                         </Typography>
-                      </div>
-                    </Box>
-                    <Box className="box-item">
-                      <Typography
-                        variant="h6"
-                        sx={{ color: "#6a7e99", width: "35%" }}
-                      >
-                        Modules:
-                      </Typography>
-                      <div>
-                        <Typography variant="h5">
-                          {row.modules.total}
+                        <div>
+                          <Typography variant="h5">
+                            Total: {row.totalModuleCount}
+                          </Typography>
+                          <Typography variant="body1">
+                            Active: {row.activeModuleCount}
+                          </Typography>
+                        </div>
+                      </Box>
+                      <Box className="box-item">
+                        <Typography
+                          variant="h6"
+                          sx={{ color: "#6a7e99", width: "35%" }}
+                        >
+                          Owner Name:
                         </Typography>
-                        <Typography variant="body1">
-                          {row.modules.active}
-                        </Typography>
-                      </div>
-                    </Box>
-                    <Box className="box-item">
-                      <Typography
-                        variant="h6"
-                        sx={{ color: "#6a7e99", width: "35%" }}
-                      >
-                        Owner Name:
-                      </Typography>
-                      <Button
-                        variant={index % 2 === 0 ? "contained" : "outlined"}
-                        sx={{
-                          color: colors.gray[100],
-                          borderColor: colors.gray[100],
-                          boxShadow: "none",
-                          height: "20px",
-                          backgroundColor:
-                            index % 2 === 0 ? colors.green[400] : "transparent",
-                          borderRadius: "5px",
-                          fontSize: "1rem",
-                          textTransform: "capitalize",
-                          "&:hover": {
+                        <Button
+                          variant={index % 2 === 0 ? "contained" : "outlined"}
+                          sx={{
+                            color: colors.gray[100],
+                            borderColor: colors.gray[100],
+                            boxShadow: "none",
+                            height: "20px",
                             backgroundColor:
                               index % 2 === 0
-                                ? colors.green[600]
+                                ? colors.green[400]
                                 : "transparent",
-                            borderColor: colors.gray[400],
-                          },
-                        }}
-                      >
-                        {row.owner}
-                      </Button>
-                    </Box>
-                    <Box className="box-item">
-                      <Typography
-                        variant="h6"
-                        sx={{ color: "#6a7e99", width: "35%" }}
-                      >
-                        Setup Time:
-                      </Typography>
-                      <Typography variant="h5">{row.setupTime}</Typography>
-                    </Box>
-                    <Box className="box-item">
-                      <Typography
-                        variant="h6"
-                        sx={{ color: "#6a7e99", width: "35%" }}
-                      >
-                        Phone Number:
-                      </Typography>
-                      <Typography variant="h5" sx={{ width: "55%" }}>
-                        {row.phoneNumber}
-                      </Typography>
-                    </Box>
-                  </Paper>
-                </Grid>
-              ))}
+                            borderRadius: "5px",
+                            fontSize: "1rem",
+                            textTransform: "capitalize",
+                            "&:hover": {
+                              backgroundColor:
+                                index % 2 === 0
+                                  ? colors.green[600]
+                                  : "transparent",
+                              borderColor: colors.gray[400],
+                            },
+                          }}
+                        >
+                          {row.ownerName}
+                        </Button>
+                      </Box>
+                      <Box className="box-item">
+                        <Typography
+                          variant="h6"
+                          sx={{ color: "#6a7e99", width: "35%" }}
+                        >
+                          Setup Time:
+                        </Typography>
+                        <Typography variant="h5">
+                          {convertDateFormat(row.setupCompletedAt)}
+                        </Typography>
+                      </Box>
+                      <Box className="box-item">
+                        <Typography
+                          variant="h6"
+                          sx={{ color: "#6a7e99", width: "35%" }}
+                        >
+                          Phone Number:
+                        </Typography>
+                        <Typography variant="h5" sx={{ width: "55%" }}>
+                          {row.auhtorizedMobileNumber}
+                        </Typography>
+                      </Box>
+                    </Paper>
+                  </Grid>
+                ))}
             </Grid>
           </Box>
         </Box>

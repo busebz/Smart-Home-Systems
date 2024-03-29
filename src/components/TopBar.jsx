@@ -4,6 +4,7 @@ import {
   InputBase,
   IconButton,
   Typography,
+  TextField,
   useMediaQuery,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
@@ -11,7 +12,10 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import PersonIcon from "@mui/icons-material/Person";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 
+import { useAuth } from "../context/authContext";
+
 function TopBar() {
+  const { logout } = useAuth();
   const [isSearchBarOpen, setIsSearchBarOpen] = useState(false);
   const isSmallScreen = useMediaQuery("(max-width:600px)");
   const searchRef = useRef(null);
@@ -70,7 +74,7 @@ function TopBar() {
               sx={{
                 "&.MuiInputBase-root": {
                   color: "#edeeed",
-                  fontSize: "0.7rem",
+                  fontSize: "clamp(14px, 1vw, 18px)",
                 },
               }}
             />
@@ -83,7 +87,11 @@ function TopBar() {
           >
             <IconButton>
               <PersonIcon sx={{ color: "#6a7e99", width: "20%" }} />
-              <Typography variant="h6" sx={{ color: "#6a7e99" }}>
+              <Typography
+                variant="h6"
+                sx={{ color: "#6a7e99" }}
+                onClick={logout}
+              >
                 Sign Out
               </Typography>
             </IconButton>
@@ -126,7 +134,10 @@ function TopBar() {
                 <SearchIcon sx={{ color: "#6a7e99", width: "100%" }} />
               </IconButton>
               <IconButton>
-                <PersonIcon sx={{ color: "#6a7e99", width: "100%" }} />
+                <PersonIcon
+                  sx={{ color: "#6a7e99", width: "100%" }}
+                  onClick={logout}
+                />
               </IconButton>
               <IconButton>
                 <SettingsIcon sx={{ color: "#6a7e99", width: "100%" }} />
@@ -157,7 +168,7 @@ function TopBar() {
                 sx={{
                   "&.MuiInputBase-root": {
                     color: "#edeeed",
-                    fontSize: "0.7rem",
+                    fontSize: "clamp(14px, 1vw, 18px)",
                   },
                 }}
               />
@@ -169,4 +180,3 @@ function TopBar() {
   );
 }
 export default TopBar;
-

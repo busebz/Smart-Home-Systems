@@ -171,7 +171,7 @@ function SideBar() {
                 <img src={user} alt="User icon" />
                 <ListItemText>
                   <Typography variant="h4" sx={{ marginLeft: "8px" }}>
-                    Bişi
+                    Sign Out
                   </Typography>
                 </ListItemText>
               </ListItem>
@@ -319,7 +319,7 @@ function SideBar() {
                       <img src={user} alt="Homepage icon" />
                       <ListItemText>
                         <Typography variant="h5" sx={{ marginLeft: "8px" }}>
-                          Bişi
+                          Sign Out
                         </Typography>
                       </ListItemText>
                     </ListItem>

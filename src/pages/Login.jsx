@@ -1,23 +1,55 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Typography,
   TextField,
   Button,
   Switch,
-  useMediaQuery
+  useMediaQuery,
 } from "@mui/material";
 
 import coverphoto from "../assets/coverphoto.png";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/authContext.jsx";
 import theme from "../theme";
+import axios from "axios";
 
 function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { login } = useAuth();
+  const navigate = useNavigate();
+  const [error, setError] = useState("");
+
   const colors = theme.palette;
 
   const isSmallScreen = useMediaQuery("(max-width:600px)");
   const isLargeScreen = useMediaQuery("(min-width:1200px)");
-  const [checked, setChecked] = React.useState();
 
+  const [checked, setChecked] = React.useState();
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "https://smarthomesolutionserverapi20240318030034.azurewebsites.net/api/auth/login",
+        {
+          emailAddress: email,
+          password,
+        }
+      );
+
+      if (response?.data?.isSuccess) {
+        login(response?.data?.value?.accessToken);
+        navigate("/dashboard");
+      } else {
+        setError(response?.data?.error?.description);
+        window.location.reload();
+      }
+    } catch (error) {
+      setError("Please write your email and password correctly.");
+      
+    }
+  };
   return (
     <Box
       sx={{
@@ -57,6 +89,18 @@ function Login() {
             marginX: "auto",
           }}
         >
+          {error && (
+            <Typography
+              variant="subtitle1"
+              color="error"
+              sx={{
+                width:"400px",
+                marginTop: "15px",
+              }}
+            >
+              {error}
+            </Typography>
+          )}
           <Box
             sx={{
               marginY: "30px",
@@ -78,10 +122,12 @@ function Login() {
             <Typography variant="h5">Email</Typography>
             <TextField
               label="Your email address"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               sx={{
                 width: "100%",
-                marginTop:"10px",
-                
+                marginTop: "10px",
+
                 "& .MuiOutlinedInput-root": {
                   borderRadius: "15px",
                 },
@@ -92,10 +138,8 @@ function Login() {
                 "& .MuiInputBase-root": {
                   color: colors.gray[100],
                   fontSize: "1.1rem",
-                }
-                
+                },
               }}
-              
             ></TextField>
             <Typography
               variant="h5"
@@ -107,9 +151,12 @@ function Login() {
             </Typography>
             <TextField
               label="Your password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               sx={{
                 width: "100%",
-                marginTop:"10px",
+                marginTop: "10px",
                 "& .MuiOutlinedInput-root": {
                   borderRadius: "15px",
                 },
@@ -153,6 +200,7 @@ function Login() {
           </Box>
           <Button
             variant="contained"
+            onClick={handleLogin}
             sx={{
               backgroundColor: colors.blue[500],
               width: "100%",
