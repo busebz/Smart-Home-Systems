@@ -92,7 +92,7 @@ function Dashboard() {
               }}
             >
               <Typography variant="h2" sx={{ padding: "20px 15px 5px" }}>
-                Aktif Evler
+                Active Homes
               </Typography>
               <Table size="small" aria-label="a dense table">
                 <TableHead>
@@ -104,7 +104,7 @@ function Dashboard() {
                       }}
                     >
                       <Typography variant="h6" sx={{ color: "#6a7e99" }}>
-                        Ev Ip Adresi
+                        Home Ip Address
                       </Typography>
                     </TableCell>
                     <TableCell
@@ -274,7 +274,7 @@ function Dashboard() {
           >
             <TopBar />
             <Typography variant="h2" sx={{ margin: "0px 10px 20px" }}>
-              Aktif Evler
+              Active Homes
             </Typography>
             <Grid container spacing={1} alignItems="center">
               {dashboardData &&
@@ -301,7 +301,7 @@ function Dashboard() {
                           variant="h6"
                           sx={{ color: "#6a7e99", width: "45%" }}
                         >
-                          Ev Ip Adresi:
+                          Home Ip Address:
                         </Typography>
                         <div
                           style={{
