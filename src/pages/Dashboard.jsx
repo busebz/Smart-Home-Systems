@@ -38,7 +38,7 @@ function Dashboard() {
     const fetchDashboardData = async () => {
       try {
         const response = await axios.get(
-          "https://smarthomesolutionserverapi20240318030034.azurewebsites.net/api/home/get",
+          "https://smarthomesolutionserverapi20240318030034.azurewebsites.net/api/homes/get",
           {
             headers: {
               Authorization: `Bearer ${token}`,
