@@ -262,6 +262,7 @@ function Dashboard() {
             display: "flex",
             width: "100%",
             background: `linear-gradient(270deg, ${colors.blue[700]}, ${colors.blue[500]},${colors.blue[800]})`,
+            minHeight: "100vh"
           }}
         >
           <SideBar />

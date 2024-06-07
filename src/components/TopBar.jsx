@@ -85,7 +85,7 @@ function TopBar() {
               alignItems: "center",
             }}
           >
-            <IconButton>
+            {/* <IconButton>
               <PersonIcon sx={{ color: "#6a7e99", width: "20%" }} />
               <Typography
                 variant="h6"
@@ -94,7 +94,7 @@ function TopBar() {
               >
                 Sign Out
               </Typography>
-            </IconButton>
+            </IconButton> */}
             <IconButton>
               <SettingsIcon sx={{ color: "#6a7e99", width: "80%" }} />
             </IconButton>
@@ -133,12 +133,12 @@ function TopBar() {
               <IconButton type="button" onClick={toggleSearchBar}>
                 <SearchIcon sx={{ color: "#6a7e99", width: "100%" }} />
               </IconButton>
-              <IconButton>
+              {/* <IconButton>
                 <PersonIcon
                   sx={{ color: "#6a7e99", width: "100%" }}
                   onClick={logout}
                 />
-              </IconButton>
+              </IconButton> */}
               <IconButton>
                 <SettingsIcon sx={{ color: "#6a7e99", width: "100%" }} />
               </IconButton>
