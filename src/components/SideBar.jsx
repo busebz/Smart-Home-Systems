@@ -82,7 +82,7 @@ function SideBar() {
             <List>
               <ListItem
                 component={Link}
-                to="/"
+                to="/dashboard"
                 sx={{
                   "&:hover": {
                     backgroundColor: colors.gray[800],
