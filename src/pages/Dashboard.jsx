@@ -45,7 +45,8 @@ function Dashboard() {
             },
           }
         );
-        setDashboardData(response?.data?.value);
+        console.log(response.data);
+        setDashboardData(response.data);
       } catch (error) {
         if (error.response && error.response.status === 401) {
           logout();
@@ -245,7 +246,7 @@ function Dashboard() {
                           }}
                         >
                           <Typography variant="h5">
-                            {row.auhtorizedMobileNumber}
+                            {row.authorizedPhoneNumber}
                           </Typography>
                         </TableCell>
                       </TableRow>
@@ -395,7 +396,7 @@ function Dashboard() {
                           Phone Number:
                         </Typography>
                         <Typography variant="h5" sx={{ width: "55%" }}>
-                          {row.auhtorizedMobileNumber}
+                          {row.authorizedPhoneNumber}
                         </Typography>
                       </Box>
                     </Paper>
