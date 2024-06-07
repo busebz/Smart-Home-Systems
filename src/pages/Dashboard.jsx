@@ -208,14 +208,15 @@ function Dashboard() {
                               color: colors.gray[100],
                               borderColor: colors.gray[100],
                               boxShadow: "none",
-                              height: "25px",
                               backgroundColor:
                                 index % 2 === 0
                                   ? colors.green[400]
                                   : "transparent",
                               borderRadius: "5px",
-                              fontSize: "1.03rem",
+                              fontSize: "1.075em",
                               textTransform: "capitalize",
+                              height: "auto",
+                              padding: "0px 8px",
                               "&:hover": {
                                 backgroundColor:
                                   index % 2 === 0
@@ -363,7 +364,7 @@ function Dashboard() {
                                 ? colors.green[400]
                                 : "transparent",
                             borderRadius: "5px",
-                            fontSize: "1rem",
+                            fontSize: "0.85em",
                             textTransform: "capitalize",
                             "&:hover": {
                               backgroundColor:
