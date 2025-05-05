@@ -31,9 +31,9 @@ function Login() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://smarthomesolutionserverapi20240318030034.azurewebsites.net/api/auth/login",
+        "https://smarthomesystemsapi-production.up.railway.app/api/auth/login",
         {
-          emailAddress: email,
+          email: email,
           password,
         }
       );

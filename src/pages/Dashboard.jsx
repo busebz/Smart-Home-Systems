@@ -38,14 +38,13 @@ function Dashboard() {
     const fetchDashboardData = async () => {
       try {
         const response = await axios.get(
-          "https://smarthomesolutionserverapi20240318030034.azurewebsites.net/api/homes/get",
+          "https://smarthomesystemsapi-production.up.railway.app/api/smarthome/smarthomeusers",
           {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           }
-        );
-        console.log(response.data);
+        );        
         setDashboardData(response.data);
       } catch (error) {
         if (error.response && error.response.status === 401) {
@@ -155,7 +154,8 @@ function Dashboard() {
                 </TableHead>
                 <TableBody>
                   {dashboardData &&
-                    dashboardData.map((row, index) => (
+                    dashboardData.map((row, index) => {
+                      return (
                       <TableRow
                         key={index}
                         sx={{
@@ -165,7 +165,6 @@ function Dashboard() {
                         <TableCell
                           sx={{
                             borderBottom: "2px solid #323f6a",
-                            
                           }}
                         >
                           <div
@@ -173,10 +172,10 @@ function Dashboard() {
                           >
                             <img src={home} alt="Home Logo" />
                             <Typography
-                              variant="h5"
+                              variant="h5"                            
                               sx={{ margin: "0px 8px 0px" }}
                             >
-                              {row.serverHardwareId}
+                              {row.homeIpAddress}
                             </Typography>
                           </div>
                         </TableCell>
@@ -247,11 +246,12 @@ function Dashboard() {
                           }}
                         >
                           <Typography variant="h5">
-                            {row.authorizedPhoneNumber}
+                            {row.phoneNumber}
                           </Typography>
                         </TableCell>
-                      </TableRow>
-                    ))}
+                      </TableRow> 
+                      ); 
+                    })}
                 </TableBody>
               </Table>
             </TableContainer>
@@ -281,7 +281,7 @@ function Dashboard() {
             </Typography>
             <Grid container spacing={1} alignItems="center">
               {dashboardData &&
-                dashboardData.map((row, index) => (
+                dashboardData.map((row, index) => (                  
                   <Grid item xs={12} key={index}>
                     <Paper
                       elevation={3}
@@ -325,7 +325,7 @@ function Dashboard() {
                               color: "#edeeed",
                             }}
                           >
-                            {row.serverHardwareId}
+                            {row.homeIpAddress}
                           </Typography>
                         </div>
                       </Box>
@@ -397,7 +397,7 @@ function Dashboard() {
                           Phone Number:
                         </Typography>
                         <Typography variant="h5" sx={{ width: "55%" }}>
-                          {row.authorizedPhoneNumber}
+                          {row.phoneNumber}
                         </Typography>
                       </Box>
                     </Paper>
