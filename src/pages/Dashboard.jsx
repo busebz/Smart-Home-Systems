@@ -38,7 +38,7 @@ function Dashboard() {
     const fetchDashboardData = async () => {
       try {
         const response = await axios.get(
-          "https://smarthomesystemsapi-production.up.railway.app/api/smarthome/smarthomeusers",
+          "https://smarthomesystemsapi.onrender.com/api/smarthome/smarthomeusers",
           {
             headers: {
               Authorization: `Bearer ${token}`,

@@ -31,7 +31,7 @@ function Login() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "https://smarthomesystemsapi-production.up.railway.app/api/auth/login",
+        "https://smarthomesystemsapi.onrender.com/api/auth/login",
         {
           email: email,
           password,

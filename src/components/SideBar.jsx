@@ -18,7 +18,11 @@ import creditcard from "../assets/creditcard.png";
 import user from "../assets/user.png";
 import theme from "../theme.jsx";
 
+import { useAuth } from "../context/authContext"
+
 function SideBar() {
+  const { logout } = useAuth();
+
   const colors = theme.palette;
 
   const isSmallScreen = useMediaQuery("(max-width:600px)");
@@ -110,6 +114,7 @@ function SideBar() {
               <ListItem
                 component={Link}
                 to="/"
+                onClick={() => logout()}
                 sx={{
                   "&:hover": {
                     backgroundColor: colors.gray[800],
@@ -205,6 +210,7 @@ function SideBar() {
                     <ListItem
                       component={Link}
                       to="/"
+                      onClick={() => logout()}
                       sx={{
                         "&:hover": {
                           backgroundColor: colors.gray[900],

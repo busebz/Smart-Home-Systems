@@ -4,11 +4,8 @@ import { useAuth } from '../context/authContext';
 
 const PrivateRoute = ({ children }) => {
     const { isAuthenticated } = useAuth();
-    if(localStorage.getItem('authToken')){
-        return children
-    }
-
-    return isAuthenticated ? children : <Navigate to="/" />;
+    
+    return isAuthenticated ? children : <Navigate to="/" replace />;
 };
 
 export default PrivateRoute;
