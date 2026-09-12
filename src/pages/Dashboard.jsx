@@ -49,21 +49,25 @@ function Dashboard() {
           Authorization: `Bearer ${token}`,
         };
 
-        const [homesResponse, activityResponse] = await Promise.all([
-          axios.get(
-            "https://smarthomesystemsapi.onrender.com/api/smarthome/smarthomeusers",
-            { headers }
-          ),
-          axios.get(
-            "https://smarthomesystemsapi.onrender.com/api/smarthome/activitylogs",
-            { headers }
-          ),
-        ]);
+        const [homesResponse, activityResponse] =
+          await Promise.all([
+            axios.get(
+              "https://smarthomesystemsapi.onrender.com/api/smarthome/smarthomeusers",
+              { headers }
+            ),
+            axios.get(
+              "https://smarthomesystemsapi.onrender.com/api/smarthome/activitylogs",
+              { headers }
+            ),
+          ]);
 
         setDashboardData(homesResponse.data || []);
         setActivityLogs(activityResponse.data || []);
       } catch (error) {
-        console.error("Dashboard data error:", error);
+        console.error(
+          "Dashboard data error:",
+          error
+        );
 
         if (
           error.response?.status === 401 ||
@@ -73,7 +77,9 @@ function Dashboard() {
           return;
         }
 
-        setError("Dashboard data could not be loaded.");
+        setError(
+          "Dashboard data could not be loaded."
+        );
       } finally {
         setLoading(false);
       }
@@ -89,7 +95,9 @@ function Dashboard() {
       return "-";
     }
 
-    return new Date(dateString).toLocaleDateString("en-GB");
+    return new Date(
+      dateString
+    ).toLocaleDateString("en-GB");
   };
 
   const convertDateTime = (dateString) => {
@@ -97,13 +105,16 @@ function Dashboard() {
       return "-";
     }
 
-    return new Date(dateString).toLocaleString("en-GB", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
+    return new Date(dateString).toLocaleString(
+      "en-GB",
+      {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      }
+    );
   };
 
   const dashboardStats = useMemo(() => {
@@ -111,13 +122,16 @@ function Dashboard() {
 
     const totalModules = dashboardData.reduce(
       (total, item) =>
-        total + Number(item.totalModuleCount || 0),
+        total +
+        Number(item.totalModuleCount || 0),
       0
     );
 
     const owners = new Set(
       dashboardData
-        .map((item) => item.ownerName?.trim())
+        .map((item) =>
+          item.ownerName?.trim()
+        )
         .filter(Boolean)
     );
 
@@ -125,7 +139,9 @@ function Dashboard() {
 
     const onlineHomes = dashboardData.filter(
       (item) =>
-        Number(item.activeModuleCount || 0) > 0
+        Number(
+          item.activeModuleCount || 0
+        ) > 0
     ).length;
 
     return {
@@ -133,7 +149,8 @@ function Dashboard() {
       totalModules,
       totalUsers,
       onlineHomes,
-      offlineHomes: totalHomes - onlineHomes,
+      offlineHomes:
+        totalHomes - onlineHomes,
     };
   }, [dashboardData]);
 
@@ -254,7 +271,8 @@ function Dashboard() {
       <Box
         sx={{
           width: "100%",
-          minHeight: "100vh",
+          height: "100vh",
+          overflow: "hidden",
 
           background: `linear-gradient(
             270deg,
@@ -286,7 +304,8 @@ function Dashboard() {
         },
 
         width: "100%",
-        minHeight: "100vh",
+        height: "100vh",
+        maxHeight: "100vh",
 
         background: `linear-gradient(
           270deg,
@@ -295,7 +314,7 @@ function Dashboard() {
           ${colors.blue[800]}
         )`,
 
-        overflowX: "hidden",
+        overflow: "hidden",
       }}
     >
       <SideBar />
@@ -314,6 +333,9 @@ function Dashboard() {
             sm: "auto",
           },
 
+          height: "100vh",
+          maxHeight: "100vh",
+
           boxSizing: "border-box",
 
           px: {
@@ -323,7 +345,9 @@ function Dashboard() {
           },
 
           pt: "6px",
-          pb: "20px",
+          pb: "10px",
+
+          overflow: "hidden",
         }}
       >
         <Box
@@ -335,17 +359,31 @@ function Dashboard() {
               sm: "100%",
             },
 
+            height: "100%",
+
             mx: "auto",
 
             boxSizing: "border-box",
+
+            display: "flex",
+            flexDirection: "column",
+
+            overflow: "hidden",
           }}
         >
-          <TopBar />
+          <Box
+            sx={{
+              flexShrink: 0,
+            }}
+          >
+            <TopBar />
+          </Box>
 
           <Box
             sx={{
               marginTop: "6px",
               marginBottom: "8px",
+              flexShrink: 0,
             }}
           >
             <Typography
@@ -396,6 +434,8 @@ function Dashboard() {
 
                 border:
                   "1px solid rgba(255,80,80,0.25)",
+
+                flexShrink: 0,
               }}
             >
               <Typography
@@ -424,6 +464,8 @@ function Dashboard() {
               gap: "8px",
 
               marginBottom: "8px",
+
+              flexShrink: 0,
             }}
           >
             <StatCard
@@ -493,6 +535,15 @@ function Dashboard() {
               gap: "8px",
 
               boxSizing: "border-box",
+
+              height: {
+                xs: "340px",
+                sm: "350px",
+                md: "350px",
+                lg: "360px",
+              },
+
+              flexShrink: 0,
             }}
           >
             <Paper
@@ -500,12 +551,7 @@ function Dashboard() {
               sx={{
                 width: "100%",
                 minWidth: 0,
-
-                height: {
-                  xs: "340px",
-                  sm: "350px",
-                  md: "360px",
-                },
+                height: "100%",
 
                 borderRadius: "10px",
 
@@ -533,6 +579,8 @@ function Dashboard() {
 
                   borderBottom:
                     "1px solid rgba(255,255,255,0.05)",
+
+                  flexShrink: 0,
                 }}
               >
                 <Typography
@@ -594,6 +642,7 @@ function Dashboard() {
                     "&::-webkit-scrollbar-thumb": {
                       background:
                         "rgba(122,167,255,0.28)",
+
                       borderRadius: "10px",
                     },
                   }}
@@ -617,7 +666,8 @@ function Dashboard() {
                           <TableCell
                             key={title}
                             sx={{
-                              padding: "8px 12px",
+                              padding:
+                                "8px 12px",
 
                               backgroundColor:
                                 colors.blue[700],
@@ -687,8 +737,7 @@ function Dashboard() {
 
                                     display: "flex",
                                     alignItems: "center",
-                                    justifyContent:
-                                      "center",
+                                    justifyContent: "center",
 
                                     color:
                                       colors.blue[500],
@@ -733,8 +782,7 @@ function Dashboard() {
                                 }}
                               >
                                 Total:{" "}
-                                {row.totalModuleCount ??
-                                  0}
+                                {row.totalModuleCount ?? 0}
                               </Typography>
 
                               <Typography
@@ -748,8 +796,7 @@ function Dashboard() {
                                 }}
                               >
                                 Active:{" "}
-                                {row.activeModuleCount ??
-                                  0}
+                                {row.activeModuleCount ?? 0}
                               </Typography>
                             </TableCell>
 
@@ -850,6 +897,7 @@ function Dashboard() {
               sx={{
                 width: "100%",
                 minWidth: 0,
+                height: "100%",
 
                 display: "grid",
 
@@ -861,6 +909,7 @@ function Dashboard() {
 
                 gridTemplateRows: {
                   md: "166px 186px",
+                  lg: "166px 186px",
                 },
 
                 gap: "8px",
@@ -871,7 +920,7 @@ function Dashboard() {
                 sx={{
                   height: {
                     xs: "166px",
-                    sm: "180px",
+                    sm: "100%",
                     md: "166px",
                   },
 
@@ -938,7 +987,8 @@ function Dashboard() {
                       borderRadius: "50%",
 
                       background:
-                        dashboardStats.totalHomes === 0
+                        dashboardStats.totalHomes ===
+                        0
                           ? "#263760"
                           : `conic-gradient(
                               ${colors.blue[500]} 0% ${onlinePercentage}%,
@@ -1097,7 +1147,7 @@ function Dashboard() {
                 sx={{
                   height: {
                     xs: "186px",
-                    sm: "180px",
+                    sm: "100%",
                     md: "186px",
                   },
 
@@ -1206,8 +1256,7 @@ function Dashboard() {
 
                               display: "flex",
                               alignItems: "center",
-                              justifyContent:
-                                "center",
+                              justifyContent: "center",
 
                               color:
                                 colors.blue[500],
