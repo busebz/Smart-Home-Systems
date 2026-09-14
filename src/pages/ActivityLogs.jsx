@@ -265,11 +265,12 @@ function ActivityLogs() {
 
   const textFieldStyle = {
     "& .MuiOutlinedInput-root": {
-      height: "42px",
+      height: "44px",
 
       color: colors.gray[100],
 
-      fontSize: "14px",
+      fontSize:
+        "clamp(14px, 1vw, 17px)",
 
       backgroundColor:
         "rgba(2,5,22,0.35)",
@@ -294,7 +295,9 @@ function ActivityLogs() {
 
     "& .MuiInputLabel-root": {
       color: "#8ea1bf",
-      fontSize: "14px",
+
+      fontSize:
+        "clamp(13px, 0.9vw, 15px)",
     },
 
     "& .MuiInputLabel-root.Mui-focused": {
@@ -306,12 +309,18 @@ function ActivityLogs() {
     },
 
     "& input": {
-      fontSize: "14px",
+      fontSize:
+        "clamp(14px, 1vw, 17px)",
     },
 
     "& input::placeholder": {
       color: "#8ea1bf",
       opacity: 1,
+    },
+
+    "& .MuiSelect-select": {
+      fontSize:
+        "clamp(14px, 1vw, 17px)",
     },
   };
 
@@ -320,7 +329,8 @@ function ActivityLogs() {
       <Box
         sx={{
           width: "100%",
-          minHeight: "100vh",
+          height: "100vh",
+          overflow: "hidden",
 
           background: `linear-gradient(
             270deg,
@@ -352,7 +362,8 @@ function ActivityLogs() {
         },
 
         width: "100%",
-        minHeight: "100vh",
+        height: "100vh",
+        maxHeight: "100vh",
 
         background: `linear-gradient(
           270deg,
@@ -361,7 +372,7 @@ function ActivityLogs() {
           ${colors.blue[800]}
         )`,
 
-        overflowX: "hidden",
+        overflow: "hidden",
       }}
     >
       <SideBar />
@@ -380,6 +391,9 @@ function ActivityLogs() {
             sm: "auto",
           },
 
+          height: "100vh",
+          maxHeight: "100vh",
+
           boxSizing: "border-box",
 
           px: {
@@ -388,8 +402,10 @@ function ActivityLogs() {
             md: "14px",
           },
 
-          pt: "6px",
-          pb: "20px",
+          pt: "4px",
+          pb: "32px",
+
+          overflow: "hidden",
         }}
       >
         <Box
@@ -401,17 +417,33 @@ function ActivityLogs() {
               sm: "100%",
             },
 
+            height: "100%",
+
             mx: "auto",
 
             boxSizing: "border-box",
+
+            display: "flex",
+            flexDirection: "column",
+
+            minHeight: 0,
+
+            overflow: "hidden",
           }}
         >
-          <TopBar />
+          <Box
+            sx={{
+              flexShrink: 0,
+            }}
+          >
+            <TopBar />
+          </Box>
 
           <Box
             sx={{
-              marginTop: "6px",
-              marginBottom: "8px",
+              marginTop: "3px",
+              marginBottom: "6px",
+              flexShrink: 0,
             }}
           >
             <Typography
@@ -421,11 +453,11 @@ function ActivityLogs() {
                 fontSize: {
                   xs: "25px",
                   sm: "27px",
-                  md: "29px",
+                  md: "clamp(28px, 2vw, 34px)",
                 },
 
                 fontWeight: 600,
-                lineHeight: 1.05,
+                lineHeight: 1.02,
               }}
             >
               Activity Logs
@@ -437,7 +469,7 @@ function ActivityLogs() {
 
                 fontSize: {
                   xs: "14px",
-                  sm: "15px",
+                  sm: "clamp(14px, 1vw, 16px)",
                 },
 
                 marginTop: "3px",
@@ -461,12 +493,16 @@ function ActivityLogs() {
 
                 border:
                   "1px solid rgba(255,80,80,0.25)",
+
+                flexShrink: 0,
               }}
             >
               <Typography
                 sx={{
                   color: "#ffb1b1",
-                  fontSize: "14px",
+
+                  fontSize:
+                    "clamp(14px, 0.95vw, 16px)",
                 }}
               >
                 {error}
@@ -479,9 +515,16 @@ function ActivityLogs() {
             sx={{
               width: "100%",
 
+              flex: 1,
+              minHeight: 0,
+              height: "auto",
+
               borderRadius: "10px",
 
               overflow: "hidden",
+
+              display: "flex",
+              flexDirection: "column",
 
               background: `linear-gradient(
                 220deg,
@@ -496,7 +539,13 @@ function ActivityLogs() {
           >
             <Box
               sx={{
-                padding: "12px 14px",
+                padding: {
+                  xs: "11px 12px",
+                  sm: "11px 14px",
+                  md: "12px 16px",
+                },
+
+                flexShrink: 0,
 
                 display: "grid",
 
@@ -526,7 +575,9 @@ function ActivityLogs() {
                       <SearchOutlinedIcon
                         sx={{
                           color: "#7fa0d5",
-                          fontSize: "21px",
+
+                          fontSize:
+                            "clamp(21px, 1.4vw, 24px)",
                         }}
                       />
                     </InputAdornment>
@@ -631,7 +682,9 @@ function ActivityLogs() {
 
                   "& input": {
                     color: colors.gray[100],
-                    fontSize: "14px",
+
+                    fontSize:
+                      "clamp(14px, 1vw, 17px)",
                   },
 
                   "& input::-webkit-calendar-picker-indicator":
@@ -645,11 +698,18 @@ function ActivityLogs() {
 
             <TableContainer
               sx={{
+                flex: 1,
+                minHeight: 0,
+
                 width: "100%",
 
                 overflowX: "auto",
+                overflowY: "auto",
+
+                scrollbarWidth: "thin",
 
                 "&::-webkit-scrollbar": {
+                  width: "6px",
                   height: "5px",
                 },
 
@@ -662,6 +722,7 @@ function ActivityLogs() {
               }}
             >
               <Table
+                stickyHeader
                 size="small"
                 sx={{
                   minWidth: "920px",
@@ -679,10 +740,11 @@ function ActivityLogs() {
                       <TableCell
                         key={title}
                         sx={{
-                          padding: "9px 14px",
+                          padding:
+                            "clamp(10px, 1vh, 13px) 14px",
 
                           backgroundColor:
-                            "rgba(5,34,94,0.72)",
+                            "rgba(5,34,94,0.95)",
 
                           borderBottom:
                             "1px solid rgba(255,255,255,0.05)",
@@ -692,7 +754,9 @@ function ActivityLogs() {
                           sx={{
                             color: "#9aacc8",
 
-                            fontSize: "14px",
+                            fontSize:
+                              "clamp(14px, 1vw, 17px)",
+
                             fontWeight: 600,
 
                             whiteSpace: "nowrap",
@@ -721,7 +785,10 @@ function ActivityLogs() {
                         <AccessTimeOutlinedIcon
                           sx={{
                             color: "#59729c",
-                            fontSize: "32px",
+
+                            fontSize:
+                              "clamp(32px, 2.3vw, 40px)",
+
                             marginBottom: "5px",
                           }}
                         />
@@ -729,7 +796,9 @@ function ActivityLogs() {
                         <Typography
                           sx={{
                             color: "#8294b1",
-                            fontSize: "15px",
+
+                            fontSize:
+                              "clamp(15px, 1vw, 17px)",
                           }}
                         >
                           No activity logs found.
@@ -760,7 +829,7 @@ function ActivityLogs() {
                             <TableCell
                               sx={{
                                 padding:
-                                  "9px 14px",
+                                  "clamp(10px, 1.15vh, 14px) 14px",
 
                                 borderBottom:
                                   "1px solid rgba(61,87,135,0.45)",
@@ -771,7 +840,9 @@ function ActivityLogs() {
                                   display: "flex",
                                   alignItems:
                                     "center",
-                                  gap: "7px",
+
+                                  gap:
+                                    "clamp(7px, 0.55vw, 9px)",
                                 }}
                               >
                                 <AccessTimeOutlinedIcon
@@ -780,7 +851,7 @@ function ActivityLogs() {
                                       "#7693bd",
 
                                     fontSize:
-                                      "18px",
+                                      "clamp(19px, 1.3vw, 23px)",
                                   }}
                                 />
 
@@ -790,7 +861,7 @@ function ActivityLogs() {
                                       colors.gray[100],
 
                                     fontSize:
-                                      "14px",
+                                      "clamp(14px, 1vw, 17px)",
 
                                     whiteSpace:
                                       "nowrap",
@@ -806,7 +877,7 @@ function ActivityLogs() {
                             <TableCell
                               sx={{
                                 padding:
-                                  "9px 14px",
+                                  "clamp(10px, 1.15vh, 14px) 14px",
 
                                 borderBottom:
                                   "1px solid rgba(61,87,135,0.45)",
@@ -818,7 +889,7 @@ function ActivityLogs() {
                                     "fit-content",
 
                                   padding:
-                                    "4px 9px",
+                                    "clamp(4px, 0.35vw, 6px) clamp(9px, 0.7vw, 12px)",
 
                                   borderRadius:
                                     "6px",
@@ -833,7 +904,9 @@ function ActivityLogs() {
                                       eventStyle.color,
 
                                     fontSize:
-                                      "13px",
+                                      "clamp(13px, 0.9vw, 15px)",
+
+                                    fontWeight: 500,
 
                                     whiteSpace:
                                       "nowrap",
@@ -848,7 +921,7 @@ function ActivityLogs() {
                             <TableCell
                               sx={{
                                 padding:
-                                  "9px 14px",
+                                  "clamp(10px, 1.15vh, 14px) 14px",
 
                                 borderBottom:
                                   "1px solid rgba(61,87,135,0.45)",
@@ -863,7 +936,7 @@ function ActivityLogs() {
                                     colors.gray[100],
 
                                   fontSize:
-                                    "14px",
+                                    "clamp(14px, 1vw, 17px)",
 
                                   overflow:
                                     "hidden",
@@ -883,7 +956,7 @@ function ActivityLogs() {
                             <TableCell
                               sx={{
                                 padding:
-                                  "9px 14px",
+                                  "clamp(10px, 1.15vh, 14px) 14px",
 
                                 borderBottom:
                                   "1px solid rgba(61,87,135,0.45)",
@@ -895,7 +968,7 @@ function ActivityLogs() {
                                     "#a5b4cd",
 
                                   fontSize:
-                                    "14px",
+                                    "clamp(14px, 1vw, 17px)",
 
                                   whiteSpace:
                                     "nowrap",
@@ -909,7 +982,7 @@ function ActivityLogs() {
                             <TableCell
                               sx={{
                                 padding:
-                                  "9px 14px",
+                                  "clamp(10px, 1.15vh, 14px) 14px",
 
                                 borderBottom:
                                   "1px solid rgba(61,87,135,0.45)",
@@ -921,7 +994,7 @@ function ActivityLogs() {
                                     "#a5b4cd",
 
                                   fontSize:
-                                    "14px",
+                                    "clamp(14px, 1vw, 17px)",
 
                                   whiteSpace:
                                     "nowrap",
@@ -942,6 +1015,8 @@ function ActivityLogs() {
 
             <Box
               sx={{
+                flexShrink: 0,
+
                 padding: "10px 14px",
 
                 borderTop:
@@ -967,7 +1042,9 @@ function ActivityLogs() {
               <Typography
                 sx={{
                   color: "#8ea0bd",
-                  fontSize: "13px",
+
+                  fontSize:
+                    "clamp(13px, 0.9vw, 15px)",
                 }}
               >
                 Showing {paginatedLogs.length} of{" "}
@@ -989,8 +1066,8 @@ function ActivityLogs() {
 
                       borderRadius: "6px",
 
-                      minWidth: "30px",
-                      height: "30px",
+                      minWidth: "32px",
+                      height: "32px",
 
                       margin: "0 1px",
 

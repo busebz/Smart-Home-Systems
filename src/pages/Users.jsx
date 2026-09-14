@@ -198,8 +198,8 @@ function Users() {
             md: "14px",
           },
 
-          pt: "6px",
-          pb: "10px",
+          pt: "4px",
+          pb: "32px",
 
           overflow: "hidden",
         }}
@@ -222,6 +222,8 @@ function Users() {
             display: "flex",
             flexDirection: "column",
 
+            minHeight: 0,
+
             overflow: "hidden",
           }}
         >
@@ -235,8 +237,8 @@ function Users() {
 
           <Box
             sx={{
-              marginTop: "6px",
-              marginBottom: "8px",
+              marginTop: "3px",
+              marginBottom: "6px",
               flexShrink: 0,
             }}
           >
@@ -245,13 +247,13 @@ function Users() {
                 color: colors.gray[100],
 
                 fontSize: {
-                  xs: "24px",
-                  sm: "26px",
-                  md: "28px",
+                  xs: "25px",
+                  sm: "27px",
+                  md: "clamp(28px, 2vw, 34px)",
                 },
 
                 fontWeight: 600,
-                lineHeight: 1.05,
+                lineHeight: 1.02,
               }}
             >
               Users
@@ -262,8 +264,8 @@ function Users() {
                 color: "#9aabc6",
 
                 fontSize: {
-                  xs: "13px",
-                  sm: "14px",
+                  xs: "14px",
+                  sm: "clamp(14px, 1vw, 16px)",
                 },
 
                 marginTop: "3px",
@@ -294,7 +296,9 @@ function Users() {
               <Typography
                 sx={{
                   color: "#ffb1b1",
-                  fontSize: "13px",
+
+                  fontSize:
+                    "clamp(14px, 0.95vw, 16px)",
                 }}
               >
                 {error}
@@ -307,15 +311,9 @@ function Users() {
             sx={{
               width: "100%",
 
-              height: {
-                xs: "calc(100vh - 120px)",
-                sm: "530px",
-                md: "530px",
-                lg: "450px",
-              },
-
+              flex: 1,
               minHeight: 0,
-              flexShrink: 0,
+              height: "auto",
 
               borderRadius: "10px",
 
@@ -339,7 +337,11 @@ function Users() {
           >
             <Box
               sx={{
-                padding: "12px 14px",
+                padding: {
+                  xs: "11px 12px",
+                  sm: "11px 14px",
+                  md: "12px 16px",
+                },
 
                 flexShrink: 0,
 
@@ -347,7 +349,7 @@ function Users() {
 
                 gridTemplateColumns: {
                   xs: "minmax(0, 1fr)",
-                  sm: "minmax(0, 1fr) 180px",
+                  sm: "minmax(0, 1fr) 200px",
                 },
 
                 gap: "10px",
@@ -370,7 +372,9 @@ function Users() {
                       <SearchOutlinedIcon
                         sx={{
                           color: "#7fa0d5",
-                          fontSize: "21px",
+
+                          fontSize:
+                            "clamp(21px, 1.4vw, 24px)",
                         }}
                       />
                     </InputAdornment>
@@ -378,9 +382,12 @@ function Users() {
                 }}
                 sx={{
                   "& .MuiOutlinedInput-root": {
-                    height: "42px",
+                    height: "44px",
 
                     color: colors.gray[100],
+
+                    fontSize:
+                      "clamp(14px, 1vw, 17px)",
 
                     backgroundColor:
                       "rgba(2,5,22,0.35)",
@@ -420,9 +427,12 @@ function Users() {
                 label="Role"
                 sx={{
                   "& .MuiOutlinedInput-root": {
-                    height: "42px",
+                    height: "44px",
 
                     color: colors.gray[100],
+
+                    fontSize:
+                      "clamp(14px, 1vw, 17px)",
 
                     backgroundColor:
                       "rgba(2,5,22,0.35)",
@@ -447,6 +457,9 @@ function Users() {
 
                   "& .MuiInputLabel-root": {
                     color: "#8ea1bf",
+
+                    fontSize:
+                      "clamp(13px, 0.9vw, 15px)",
                   },
 
                   "& .MuiInputLabel-root.Mui-focused": {
@@ -516,7 +529,8 @@ function Users() {
                       <TableCell
                         key={title}
                         sx={{
-                          padding: "9px 14px",
+                          padding:
+                            "clamp(10px, 1vh, 13px) 14px",
 
                           backgroundColor:
                             "rgba(5,34,94,0.95)",
@@ -529,7 +543,9 @@ function Users() {
                           sx={{
                             color: "#9aacC8",
 
-                            fontSize: "13px",
+                            fontSize:
+                              "clamp(14px, 1vw, 17px)",
+
                             fontWeight: 600,
 
                             whiteSpace: "nowrap",
@@ -558,7 +574,9 @@ function Users() {
                         <Typography
                           sx={{
                             color: "#8294b1",
-                            fontSize: "14px",
+
+                            fontSize:
+                              "clamp(14px, 1vw, 17px)",
                           }}
                         >
                           No users found.
@@ -582,7 +600,8 @@ function Users() {
                         >
                           <TableCell
                             sx={{
-                              padding: "8px 14px",
+                              padding:
+                                "clamp(10px, 1.15vh, 14px) 14px",
 
                               borderBottom:
                                 "1px solid rgba(61,87,135,0.45)",
@@ -592,14 +611,21 @@ function Users() {
                               sx={{
                                 display: "flex",
                                 alignItems: "center",
-                                gap: "10px",
+
+                                gap:
+                                  "clamp(10px, 0.8vw, 13px)",
                               }}
                             >
                               <Box
                                 sx={{
-                                  width: "34px",
-                                  height: "34px",
-                                  minWidth: "34px",
+                                  width:
+                                    "clamp(38px, 2.6vw, 46px)",
+
+                                  height:
+                                    "clamp(38px, 2.6vw, 46px)",
+
+                                  minWidth:
+                                    "clamp(38px, 2.6vw, 46px)",
 
                                   borderRadius: "50%",
 
@@ -614,7 +640,10 @@ function Users() {
                                 <Typography
                                   sx={{
                                     color: "#ffffff",
-                                    fontSize: "12px",
+
+                                    fontSize:
+                                      "clamp(13px, 0.9vw, 15px)",
+
                                     fontWeight: 600,
                                   }}
                                 >
@@ -629,7 +658,8 @@ function Users() {
                                   color:
                                     colors.gray[100],
 
-                                  fontSize: "14px",
+                                  fontSize:
+                                    "clamp(15px, 1.05vw, 18px)",
 
                                   whiteSpace: "nowrap",
                                 }}
@@ -641,7 +671,8 @@ function Users() {
 
                           <TableCell
                             sx={{
-                              padding: "8px 14px",
+                              padding:
+                                "clamp(10px, 1.15vh, 14px) 14px",
 
                               borderBottom:
                                 "1px solid rgba(61,87,135,0.45)",
@@ -652,7 +683,8 @@ function Users() {
                                 color:
                                   colors.gray[100],
 
-                                fontSize: "14px",
+                                fontSize:
+                                  "clamp(14px, 1vw, 17px)",
 
                                 whiteSpace: "nowrap",
                               }}
@@ -663,7 +695,8 @@ function Users() {
 
                           <TableCell
                             sx={{
-                              padding: "8px 14px",
+                              padding:
+                                "clamp(10px, 1.15vh, 14px) 14px",
 
                               borderBottom:
                                 "1px solid rgba(61,87,135,0.45)",
@@ -673,9 +706,10 @@ function Users() {
                               sx={{
                                 width: "fit-content",
 
-                                minWidth: "62px",
+                                minWidth: "70px",
 
-                                padding: "3px 10px",
+                                padding:
+                                  "clamp(4px, 0.35vw, 6px) clamp(10px, 0.7vw, 13px)",
 
                                 borderRadius: "6px",
 
@@ -690,7 +724,11 @@ function Users() {
                               <Typography
                                 sx={{
                                   color: "#ffffff",
-                                  fontSize: "12px",
+
+                                  fontSize:
+                                    "clamp(13px, 0.9vw, 15px)",
+
+                                  fontWeight: 500,
                                 }}
                               >
                                 {user.role || "User"}
@@ -700,7 +738,8 @@ function Users() {
 
                           <TableCell
                             sx={{
-                              padding: "8px 14px",
+                              padding:
+                                "clamp(10px, 1.15vh, 14px) 14px",
 
                               borderBottom:
                                 "1px solid rgba(61,87,135,0.45)",
@@ -711,13 +750,20 @@ function Users() {
                                 display: "flex",
                                 alignItems: "center",
 
-                                gap: "7px",
+                                gap:
+                                  "clamp(7px, 0.55vw, 9px)",
                               }}
                             >
                               <Box
                                 sx={{
-                                  width: "8px",
-                                  height: "8px",
+                                  width:
+                                    "clamp(9px, 0.65vw, 11px)",
+
+                                  height:
+                                    "clamp(9px, 0.65vw, 11px)",
+
+                                  minWidth:
+                                    "clamp(9px, 0.65vw, 11px)",
 
                                   borderRadius: "50%",
 
@@ -737,7 +783,10 @@ function Users() {
                                       ? "#ff6262"
                                       : colors.green[300],
 
-                                  fontSize: "13px",
+                                  fontSize:
+                                    "clamp(14px, 1vw, 17px)",
+
+                                  fontWeight: 500,
                                 }}
                               >
                                 {user.status ||
@@ -766,7 +815,9 @@ function Users() {
               <Typography
                 sx={{
                   color: "#8ea0bd",
-                  fontSize: "12px",
+
+                  fontSize:
+                    "clamp(13px, 0.9vw, 15px)",
                 }}
               >
                 Showing {filteredUsers.length} of{" "}

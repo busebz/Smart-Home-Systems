@@ -335,8 +335,8 @@ function Devices() {
             md: "14px",
           },
 
-          pt: "6px",
-          pb: "10px",
+          pt: "4px",
+          pb: "32px",
 
           overflow: "hidden",
         }}
@@ -359,6 +359,8 @@ function Devices() {
             display: "flex",
             flexDirection: "column",
 
+            minHeight: 0,
+
             overflow: "hidden",
           }}
         >
@@ -372,8 +374,8 @@ function Devices() {
 
           <Box
             sx={{
-              marginTop: "6px",
-              marginBottom: "8px",
+              marginTop: "3px",
+              marginBottom: "6px",
               flexShrink: 0,
             }}
           >
@@ -382,13 +384,13 @@ function Devices() {
                 color: colors.gray[100],
 
                 fontSize: {
-                  xs: "24px",
-                  sm: "26px",
-                  md: "28px",
+                  xs: "25px",
+                  sm: "27px",
+                  md: "clamp(28px, 2vw, 34px)",
                 },
 
                 fontWeight: 600,
-                lineHeight: 1.05,
+                lineHeight: 1.02,
               }}
             >
               Devices
@@ -399,8 +401,8 @@ function Devices() {
                 color: "#9aabc6",
 
                 fontSize: {
-                  xs: "13px",
-                  sm: "14px",
+                  xs: "14px",
+                  sm: "clamp(14px, 1vw, 16px)",
                 },
 
                 marginTop: "3px",
@@ -415,15 +417,9 @@ function Devices() {
             sx={{
               width: "100%",
 
-              height: {
-                xs: "calc(100vh - 120px)",
-                sm: "530px",
-                md: "530px",
-                lg: "450px",
-              },
-
+              flex: 1,
               minHeight: 0,
-              flexShrink: 0,
+              height: "auto",
 
               borderRadius: "11px",
 
@@ -448,9 +444,9 @@ function Devices() {
             <Box
               sx={{
                 padding: {
-                  xs: "10px 12px",
-                  sm: "10px 14px",
-                  md: "11px 16px",
+                  xs: "11px 12px",
+                  sm: "11px 14px",
+                  md: "12px 16px",
                 },
 
                 flexShrink: 0,
@@ -463,7 +459,7 @@ function Devices() {
                   md: "1.5fr repeat(3, minmax(130px, 0.8fr))",
                 },
 
-                gap: "8px",
+                gap: "9px",
 
                 alignItems: "end",
 
@@ -485,6 +481,8 @@ function Devices() {
                       <SearchOutlinedIcon
                         sx={{
                           color: "#86a6d8",
+                          fontSize:
+                            "clamp(21px, 1.4vw, 24px)",
                         }}
                       />
                     </InputAdornment>
@@ -499,7 +497,9 @@ function Devices() {
 
                   "& .MuiOutlinedInput-root": {
                     color: colors.gray[100],
-                    fontSize: "14px",
+
+                    fontSize:
+                      "clamp(14px, 1vw, 17px)",
 
                     backgroundColor:
                       "rgba(2,5,22,0.28)",
@@ -520,6 +520,11 @@ function Devices() {
                       borderColor:
                         colors.blue[500],
                     },
+                  },
+
+                  "& input": {
+                    paddingTop: "10px",
+                    paddingBottom: "10px",
                   },
 
                   "& input::placeholder": {
@@ -609,7 +614,8 @@ function Devices() {
                 <Typography
                   sx={{
                     color: "#ff9d9d",
-                    fontSize: "13px",
+                    fontSize:
+                      "clamp(14px, 0.95vw, 16px)",
                   }}
                 >
                   {error}
@@ -672,7 +678,8 @@ function Devices() {
 
                   alignItems: "center",
 
-                  padding: "10px 14px",
+                  padding:
+                    "clamp(11px, 1.2vh, 15px) 14px",
 
                   position: "sticky",
                   top: 0,
@@ -695,8 +702,11 @@ function Devices() {
                     key={title}
                     sx={{
                       color: "#b2c1d9",
-                      fontSize: "14px",
-                      fontWeight: 500,
+
+                      fontSize:
+                        "clamp(14px, 1vw, 17px)",
+
+                      fontWeight: 600,
                     }}
                   >
                     {title}
@@ -714,7 +724,9 @@ function Devices() {
                   <Typography
                     sx={{
                       color: "#8192af",
-                      fontSize: "14px",
+
+                      fontSize:
+                        "clamp(14px, 1vw, 17px)",
                     }}
                   >
                     No devices found.
@@ -743,9 +755,9 @@ function Devices() {
                       alignItems: "center",
 
                       padding: {
-                        xs: "11px 14px",
-                        sm: "12px 15px",
-                        md: "9px 14px",
+                        xs: "12px 14px",
+                        sm: "13px 15px",
+                        md: "clamp(11px, 1.25vh, 15px) 14px",
                       },
 
                       borderBottom:
@@ -765,16 +777,23 @@ function Devices() {
                       sx={{
                         display: "flex",
                         alignItems: "center",
-                        gap: "9px",
+
+                        gap:
+                          "clamp(9px, 0.8vw, 12px)",
 
                         minWidth: 0,
                       }}
                     >
                       <Box
                         sx={{
-                          width: "38px",
-                          height: "38px",
-                          minWidth: "38px",
+                          width:
+                            "clamp(40px, 2.8vw, 48px)",
+
+                          height:
+                            "clamp(40px, 2.8vw, 48px)",
+
+                          minWidth:
+                            "clamp(40px, 2.8vw, 48px)",
 
                           borderRadius: "8px",
 
@@ -788,7 +807,8 @@ function Devices() {
                           color: "#b8d7ff",
 
                           "& svg": {
-                            fontSize: "21px",
+                            fontSize:
+                              "clamp(22px, 1.5vw, 27px)",
                           },
                         }}
                       >
@@ -807,7 +827,9 @@ function Devices() {
                             color:
                               colors.gray[100],
 
-                            fontSize: "14px",
+                            fontSize:
+                              "clamp(15px, 1.05vw, 18px)",
+
                             fontWeight: 500,
 
                             overflow: "hidden",
@@ -826,8 +848,11 @@ function Devices() {
                         <Typography
                           sx={{
                             color: "#8496b8",
-                            fontSize: "12px",
-                            marginTop: "1px",
+
+                            fontSize:
+                              "clamp(13px, 0.9vw, 15px)",
+
+                            marginTop: "2px",
                           }}
                         >
                           {device.deviceCode}
@@ -859,11 +884,15 @@ function Devices() {
                         sx={{
                           display: "inline-block",
 
-                          padding: "4px 9px",
+                          padding:
+                            "clamp(4px, 0.4vw, 6px) clamp(9px, 0.7vw, 12px)",
 
                           borderRadius: "7px",
 
-                          fontSize: "12px",
+                          fontSize:
+                            "clamp(13px, 0.9vw, 15px)",
+
+                          fontWeight: 500,
 
                           ...getTypeStyle(
                             device.deviceType
@@ -890,14 +919,21 @@ function Devices() {
                         sx={{
                           display: "flex",
                           alignItems: "center",
-                          gap: "7px",
+
+                          gap:
+                            "clamp(7px, 0.55vw, 9px)",
                         }}
                       >
                         <Box
                           sx={{
-                            width: "9px",
-                            height: "9px",
-                            minWidth: "9px",
+                            width:
+                              "clamp(9px, 0.65vw, 11px)",
+
+                            height:
+                              "clamp(9px, 0.65vw, 11px)",
+
+                            minWidth:
+                              "clamp(9px, 0.65vw, 11px)",
 
                             borderRadius: "50%",
 
@@ -917,7 +953,10 @@ function Devices() {
                                 ? "#12d39a"
                                 : "#ff6060",
 
-                            fontSize: "13px",
+                            fontSize:
+                              "clamp(14px, 1vw, 17px)",
+
+                            fontWeight: 500,
                           }}
                         >
                           {device.status}
@@ -941,9 +980,9 @@ function Devices() {
                 flexShrink: 0,
 
                 padding: {
-                  xs: "5px 12px 9px",
-                  sm: "5px 14px 9px",
-                  md: "5px 16px 9px",
+                  xs: "6px 12px 10px",
+                  sm: "6px 14px 10px",
+                  md: "6px 16px 10px",
                 },
 
                 display: "flex",
@@ -966,7 +1005,9 @@ function Devices() {
               <Typography
                 sx={{
                   color: "#94a6c4",
-                  fontSize: "13px",
+
+                  fontSize:
+                    "clamp(13px, 0.9vw, 15px)",
                 }}
               >
                 Showing {paginatedDevices.length} of{" "}
@@ -988,12 +1029,12 @@ function Devices() {
 
                       borderRadius: "6px",
 
-                      minWidth: "30px",
-                      height: "30px",
+                      minWidth: "32px",
+                      height: "32px",
 
                       margin: "0 1px",
 
-                      fontSize: "13px",
+                      fontSize: "14px",
 
                       backgroundColor:
                         "rgba(0,117,255,0.08)",
@@ -1025,7 +1066,9 @@ function Devices() {
 const filterStyle = {
   "& .MuiOutlinedInput-root": {
     color: "#edeeed",
-    fontSize: "14px",
+
+    fontSize:
+      "clamp(14px, 1vw, 17px)",
 
     backgroundColor:
       "rgba(2,5,22,0.28)",
@@ -1047,6 +1090,11 @@ const filterStyle = {
     },
   },
 
+  "& .MuiSelect-select": {
+    paddingTop: "10px",
+    paddingBottom: "10px",
+  },
+
   "& .MuiSvgIcon-root": {
     color: "#9ab8e7",
   },
@@ -1062,8 +1110,13 @@ function FilterBox({ label, children }) {
       <Typography
         sx={{
           color: "#aebcd3",
-          fontSize: "12px",
-          marginBottom: "3px",
+
+          fontSize:
+            "clamp(13px, 0.9vw, 15px)",
+
+          fontWeight: 500,
+
+          marginBottom: "4px",
         }}
       >
         {label}
@@ -1085,7 +1138,7 @@ function MobileLabel({ children }) {
 
         color: "#7184a5",
 
-        fontSize: "11px",
+        fontSize: "13px",
 
         marginBottom: "3px",
       }}
@@ -1117,7 +1170,11 @@ function ResponsiveValue({
       <Typography
         sx={{
           color: "#d8dfec",
-          fontSize: "13px",
+
+          fontSize:
+            "clamp(14px, 1vw, 17px)",
+
+          fontWeight: 400,
 
           overflow: "hidden",
           textOverflow: "ellipsis",

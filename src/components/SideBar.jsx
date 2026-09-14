@@ -93,13 +93,16 @@ function SideBar() {
       }}
       sx={{
         width: "calc(100% - 16px)",
-        height: mobile ? "42px" : "44px",
+
+        height: mobile
+          ? "44px"
+          : "48px",
 
         margin: "4px 8px",
 
         padding: mobile
-          ? "6px 10px"
-          : "7px 11px",
+          ? "7px 10px"
+          : "8px 12px",
 
         borderRadius: "8px",
 
@@ -111,7 +114,10 @@ function SideBar() {
 
         "& .MuiListItemIcon-root": {
           color: "#7aa7ff",
-          minWidth: mobile ? "31px" : "34px",
+
+          minWidth: mobile
+            ? "34px"
+            : "39px",
         },
 
         "&:hover": {
@@ -133,8 +139,8 @@ function SideBar() {
         sx={{
           "& svg": {
             fontSize: mobile
-              ? "19px"
-              : "20px",
+              ? "21px"
+              : "clamp(22px, 1.45vw, 25px)",
           },
         }}
       >
@@ -148,8 +154,10 @@ function SideBar() {
               color: colors.gray[100],
 
               fontSize: mobile
-                ? "13px"
-                : "clamp(13px, 1vw, 16px)",
+                ? "14px"
+                : "clamp(15px, 1.08vw, 18px)",
+
+              fontWeight: 400,
 
               whiteSpace: "nowrap",
 
@@ -165,13 +173,11 @@ function SideBar() {
 
   const renderSidebarContent = (mobile = false) => (
     <>
-      {/* LOGO */}
-
       <Box
         sx={{
           height: mobile
-            ? "58px"
-            : "62px",
+            ? "60px"
+            : "64px",
 
           display: "flex",
 
@@ -192,8 +198,8 @@ function SideBar() {
             color: colors.gray[100],
 
             fontSize: mobile
-              ? "24px"
-              : "27px",
+              ? "27px"
+              : "clamp(29px, 2vw, 34px)",
 
             fontWeight: 500,
 
@@ -206,8 +212,6 @@ function SideBar() {
         </Typography>
       </Box>
 
-      {/* MAIN MENU */}
-
       <List
         sx={{
           paddingTop: "8px",
@@ -218,8 +222,6 @@ function SideBar() {
           renderMenuItem(item, mobile)
         )}
       </List>
-
-      {/* ACCOUNT */}
 
       <Box
         sx={{
@@ -235,13 +237,15 @@ function SideBar() {
           sx={{
             color: colors.gray[400],
 
-            fontSize: "10px",
+            fontSize: mobile
+              ? "11px"
+              : "clamp(11px, 0.78vw, 13px)",
 
             marginTop: "12px",
 
-            marginBottom: "5px",
+            marginBottom: "6px",
 
-            letterSpacing: "0.7px",
+            letterSpacing: "0.8px",
 
             whiteSpace: "nowrap",
           }}
@@ -249,8 +253,6 @@ function SideBar() {
           ACCOUNT PAGES
         </Typography>
       </Box>
-
-      {/* SIGN OUT */}
 
       <ListItem
         component={NavLink}
@@ -266,14 +268,14 @@ function SideBar() {
           width: "calc(100% - 16px)",
 
           height: mobile
-            ? "42px"
-            : "44px",
+            ? "44px"
+            : "48px",
 
           margin: "4px 8px",
 
           padding: mobile
-            ? "6px 10px"
-            : "7px 11px",
+            ? "7px 10px"
+            : "8px 12px",
 
           borderRadius: "8px",
 
@@ -286,8 +288,8 @@ function SideBar() {
             color: "#7aa7ff",
 
             minWidth: mobile
-              ? "31px"
-              : "34px",
+              ? "34px"
+              : "39px",
           },
 
           "&:hover": {
@@ -300,8 +302,8 @@ function SideBar() {
           <LogoutOutlinedIcon
             sx={{
               fontSize: mobile
-                ? "19px"
-                : "20px",
+                ? "21px"
+                : "clamp(22px, 1.45vw, 25px)",
             }}
           />
         </ListItemIcon>
@@ -313,8 +315,10 @@ function SideBar() {
                 color: colors.gray[100],
 
                 fontSize: mobile
-                  ? "13px"
-                  : "clamp(13px, 1vw, 16px)",
+                  ? "14px"
+                  : "clamp(15px, 1.08vw, 18px)",
+
+                fontWeight: 400,
 
                 lineHeight: 1,
               }}
@@ -329,16 +333,14 @@ function SideBar() {
 
   return (
     <>
-      {/* DESKTOP */}
-
       {!isSmallScreen && (
         <Box
           sx={{
-            width: "15%",
+            width: "16%",
 
-            minWidth: "180px",
+            minWidth: "195px",
 
-            maxWidth: "220px",
+            maxWidth: "240px",
 
             height: "98.3vh",
 
@@ -364,8 +366,6 @@ function SideBar() {
         </Box>
       )}
 
-      {/* MOBILE */}
-
       {isSmallScreen && (
         <>
           <Box
@@ -385,6 +385,8 @@ function SideBar() {
                 sx={{
                   color:
                     colors.gray[100],
+
+                  fontSize: "25px",
                 }}
               />
             </IconButton>
