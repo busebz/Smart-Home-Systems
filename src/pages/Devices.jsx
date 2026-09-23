@@ -1,5 +1,24 @@
 import React, { useEffect, useMemo, useState } from "react";
 
+const API_URL =
+  "https://smarthomesystemsapi.onrender.com/api/smarthome/devices";
+
+const DEVICES_PER_PAGE = 5;
+
+const formatDateTime = (dateString) => {
+  if (!dateString) {
+    return "-";
+  }
+
+  return new Date(dateString).toLocaleString("en-GB", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+};
+
 import {
   Box,
   Typography,
@@ -44,8 +63,6 @@ function Devices() {
 
   const [page, setPage] = useState(1);
 
-  const devicesPerPage = 5;
-
   useEffect(() => {
     const fetchDevices = async () => {
       try {
@@ -53,7 +70,7 @@ function Devices() {
         setError("");
 
         const response = await axios.get(
-          "https://smarthomesystemsapi.onrender.com/api/smarthome/devices",
+          API_URL,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -84,32 +101,30 @@ function Devices() {
     }
   }, [token, logout]);
 
-  const homes = useMemo(() => {
-    return [
-      "All",
-      ...new Set(
-        devices
-          .map((device) => device.homeIpAddress)
-          .filter(Boolean)
-      ),
-    ];
-  }, [devices]);
+  const { homes, deviceTypes } = useMemo(() => {
+    const homeSet = new Set();
+    const typeSet = new Set();
 
-  const deviceTypes = useMemo(() => {
-    return [
-      "All",
-      ...new Set(
-        devices
-          .map((device) => device.deviceType)
-          .filter(Boolean)
-      ),
-    ];
+    devices.forEach((device) => {
+      if (device.homeIpAddress) {
+        homeSet.add(device.homeIpAddress);
+      }
+
+      if (device.deviceType) {
+        typeSet.add(device.deviceType);
+      }
+    });
+
+    return {
+      homes: ["All", ...homeSet],
+      deviceTypes: ["All", ...typeSet],
+    };
   }, [devices]);
 
   const filteredDevices = useMemo(() => {
-    return devices.filter((device) => {
-      const searchValue = searchText.toLowerCase().trim();
+    const searchValue = searchText.toLowerCase().trim();
 
+    return devices.filter((device) => {
       const matchesSearch =
         !searchValue ||
         device.deviceName
@@ -162,38 +177,21 @@ function Devices() {
   ]);
 
   const pageCount = Math.ceil(
-    filteredDevices.length / devicesPerPage
+    filteredDevices.length / DEVICES_PER_PAGE
   );
 
   const paginatedDevices = useMemo(() => {
     const startIndex =
-      (page - 1) * devicesPerPage;
+      (page - 1) * DEVICES_PER_PAGE;
 
     const endIndex =
-      startIndex + devicesPerPage;
+      startIndex + DEVICES_PER_PAGE;
 
     return filteredDevices.slice(
       startIndex,
       endIndex
     );
   }, [filteredDevices, page]);
-
-  const formatDateTime = (dateString) => {
-    if (!dateString) {
-      return "-";
-    }
-
-    return new Date(dateString).toLocaleString(
-      "en-GB",
-      {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-      }
-    );
-  };
 
   const getDeviceIcon = (type) => {
     switch (type?.toLowerCase()) {

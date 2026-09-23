@@ -29,6 +29,31 @@ import theme from "../theme.jsx";
 
 import { useAuth } from "../context/authContext.jsx";
 
+const API_BASE_URL = "https://smarthomesystemsapi.onrender.com/api/smarthome";
+const RECENT_ACTIVITY_LIMIT = 5;
+
+const convertDateFormat = (dateString) => {
+  if (!dateString) {
+    return "-";
+  }
+
+  return new Date(dateString).toLocaleDateString("en-GB");
+};
+
+const convertDateTime = (dateString) => {
+  if (!dateString) {
+    return "-";
+  }
+
+  return new Date(dateString).toLocaleString("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+};
+
 function Dashboard() {
   const colors = theme.palette;
 
@@ -53,14 +78,8 @@ function Dashboard() {
         };
 
         const [homesResponse, activityResponse] = await Promise.all([
-          axios.get(
-            "https://smarthomesystemsapi.onrender.com/api/smarthome/smarthomeusers",
-            { headers }
-          ),
-          axios.get(
-            "https://smarthomesystemsapi.onrender.com/api/smarthome/activitylogs",
-            { headers }
-          ),
+          axios.get(`${API_BASE_URL}/smarthomeusers`, { headers }),
+          axios.get(`${API_BASE_URL}/activitylogs`, { headers }),
         ]);
 
         setDashboardData(homesResponse.data || []);
@@ -87,61 +106,36 @@ function Dashboard() {
     }
   }, [token, logout]);
 
-  const convertDateFormat = (dateString) => {
-    if (!dateString) {
-      return "-";
-    }
-
-    return new Date(dateString).toLocaleDateString("en-GB");
-  };
-
-  const convertDateTime = (dateString) => {
-    if (!dateString) {
-      return "-";
-    }
-
-    return new Date(dateString).toLocaleString("en-GB", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  };
-
   const dashboardStats = useMemo(() => {
+    const owners = new Set();
+    let totalModules = 0;
+    let onlineHomes = 0;
+
+    dashboardData.forEach((item) => {
+      totalModules += Number(item.totalModuleCount || 0);
+
+      const ownerName = item.ownerName?.trim();
+      if (ownerName) {
+        owners.add(ownerName);
+      }
+
+      if (Number(item.activeModuleCount || 0) > 0) {
+        onlineHomes += 1;
+      }
+    });
+
     const totalHomes = dashboardData.length;
-
-    const totalModules = dashboardData.reduce(
-      (total, item) =>
-        total + Number(item.totalModuleCount || 0),
-      0
-    );
-
-    const owners = new Set(
-      dashboardData
-        .map((item) => item.ownerName?.trim())
-        .filter(Boolean)
-    );
-
-    const totalUsers = owners.size;
-
-    const onlineHomes = dashboardData.filter(
-      (item) => Number(item.activeModuleCount || 0) > 0
-    ).length;
 
     return {
       totalHomes,
       totalModules,
-      totalUsers,
+      totalUsers: owners.size,
       onlineHomes,
       offlineHomes: totalHomes - onlineHomes,
     };
   }, [dashboardData]);
 
-  const recentActivities = useMemo(() => {
-    return activityLogs.slice(0, 5);
-  }, [activityLogs]);
+  const recentActivities = activityLogs.slice(0, RECENT_ACTIVITY_LIMIT);
 
   const onlinePercentage =
     dashboardStats.totalHomes > 0

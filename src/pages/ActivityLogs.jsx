@@ -28,6 +28,35 @@ import theme from "../theme.jsx";
 
 import { useAuth } from "../context/authContext.jsx";
 
+const API_URL =
+  "https://smarthomesystemsapi.onrender.com/api/smarthome/activitylogs";
+
+const LOGS_PER_PAGE = 5;
+
+const tableCellStyle = {
+  padding: "clamp(10px, 1.15vh, 14px) 14px",
+  borderBottom: "1px solid rgba(61,87,135,0.45)",
+};
+
+const tableTextStyle = {
+  fontSize: "clamp(14px, 1vw, 17px)",
+  whiteSpace: "nowrap",
+};
+
+const formatDateTime = (dateString) => {
+  if (!dateString) {
+    return "-";
+  }
+
+  return new Date(dateString).toLocaleString("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+};
+
 function ActivityLogs() {
   const colors = theme.palette;
 
@@ -46,22 +75,17 @@ function ActivityLogs() {
 
   const [page, setPage] = useState(1);
 
-  const logsPerPage = 5;
-
   useEffect(() => {
     const fetchActivityLogs = async () => {
       try {
         setLoading(true);
         setError("");
 
-        const response = await axios.get(
-          "https://smarthomesystemsapi.onrender.com/api/smarthome/activitylogs",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await axios.get(API_URL, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
         setActivityLogs(response.data || []);
       } catch (error) {
@@ -86,56 +110,46 @@ function ActivityLogs() {
     }
   }, [token, logout]);
 
-  const eventTypes = useMemo(() => {
-    return [
-      ...new Set(
-        activityLogs
-          .map((item) => item.eventType)
-          .filter(Boolean)
-      ),
-    ];
-  }, [activityLogs]);
+  const {
+    eventTypes,
+    users,
+    homes,
+  } = useMemo(() => {
+    const eventTypeSet = new Set();
+    const userSet = new Set();
+    const homeSet = new Set();
 
-  const users = useMemo(() => {
-    return [
-      ...new Set(
-        activityLogs
-          .map((item) => item.user)
-          .filter(Boolean)
-      ),
-    ];
-  }, [activityLogs]);
+    activityLogs.forEach((item) => {
+      if (item.eventType) {
+        eventTypeSet.add(item.eventType);
+      }
 
-  const homes = useMemo(() => {
-    return [
-      ...new Set(
-        activityLogs
-          .map((item) => item.homeIpAddress)
-          .filter(Boolean)
-      ),
-    ];
+      if (item.user) {
+        userSet.add(item.user);
+      }
+
+      if (item.homeIpAddress) {
+        homeSet.add(item.homeIpAddress);
+      }
+    });
+
+    return {
+      eventTypes: [...eventTypeSet],
+      users: [...userSet],
+      homes: [...homeSet],
+    };
   }, [activityLogs]);
 
   const filteredLogs = useMemo(() => {
-    return activityLogs.filter((log) => {
-      const searchValue = searchText
-        .toLowerCase()
-        .trim();
+    const searchValue = searchText.toLowerCase().trim();
 
+    return activityLogs.filter((log) => {
       const matchesSearch =
         !searchValue ||
-        log.eventType
-          ?.toLowerCase()
-          .includes(searchValue) ||
-        log.description
-          ?.toLowerCase()
-          .includes(searchValue) ||
-        log.user
-          ?.toLowerCase()
-          .includes(searchValue) ||
-        log.homeIpAddress
-          ?.toLowerCase()
-          .includes(searchValue);
+        log.eventType?.toLowerCase().includes(searchValue) ||
+        log.description?.toLowerCase().includes(searchValue) ||
+        log.user?.toLowerCase().includes(searchValue) ||
+        log.homeIpAddress?.toLowerCase().includes(searchValue);
 
       const matchesEventType =
         eventTypeFilter === "All" ||
@@ -187,38 +201,18 @@ function ActivityLogs() {
   ]);
 
   const pageCount = Math.ceil(
-    filteredLogs.length / logsPerPage
+    filteredLogs.length / LOGS_PER_PAGE
   );
 
   const paginatedLogs = useMemo(() => {
     const startIndex =
-      (page - 1) * logsPerPage;
-
-    const endIndex =
-      startIndex + logsPerPage;
+      (page - 1) * LOGS_PER_PAGE;
 
     return filteredLogs.slice(
       startIndex,
-      endIndex
+      startIndex + LOGS_PER_PAGE
     );
   }, [filteredLogs, page]);
-
-  const formatDateTime = (dateString) => {
-    if (!dateString) {
-      return "-";
-    }
-
-    return new Date(dateString).toLocaleString(
-      "en-GB",
-      {
-        day: "2-digit",
-        month: "short",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-      }
-    );
-  };
 
   const getEventColor = (eventType) => {
     const value =
@@ -226,8 +220,7 @@ function ActivityLogs() {
 
     if (value.includes("login")) {
       return {
-        background:
-          "rgba(0,117,255,0.18)",
+        background: "rgba(0,117,255,0.18)",
         color: "#71aaff",
       };
     }
@@ -238,8 +231,7 @@ function ActivityLogs() {
       value.includes("delete")
     ) {
       return {
-        background:
-          "rgba(255,70,70,0.14)",
+        background: "rgba(255,70,70,0.14)",
         color: "#ff7373",
       };
     }
@@ -250,15 +242,13 @@ function ActivityLogs() {
       value.includes("online")
     ) {
       return {
-        background:
-          "rgba(2,183,114,0.15)",
+        background: "rgba(2,183,114,0.15)",
         color: colors.green[300],
       };
     }
 
     return {
-      background:
-        "rgba(122,140,180,0.15)",
+      background: "rgba(122,140,180,0.15)",
       color: "#9cafcf",
     };
   };
@@ -266,38 +256,27 @@ function ActivityLogs() {
   const textFieldStyle = {
     "& .MuiOutlinedInput-root": {
       height: "44px",
-
       color: colors.gray[100],
-
-      fontSize:
-        "clamp(14px, 1vw, 17px)",
-
-      backgroundColor:
-        "rgba(2,5,22,0.35)",
-
+      fontSize: "clamp(14px, 1vw, 17px)",
+      backgroundColor: "rgba(2,5,22,0.35)",
       borderRadius: "8px",
 
       "& fieldset": {
-        borderColor:
-          "rgba(0,117,255,0.45)",
+        borderColor: "rgba(0,117,255,0.45)",
       },
 
       "&:hover fieldset": {
-        borderColor:
-          colors.blue[500],
+        borderColor: colors.blue[500],
       },
 
       "&.Mui-focused fieldset": {
-        borderColor:
-          colors.blue[500],
+        borderColor: colors.blue[500],
       },
     },
 
     "& .MuiInputLabel-root": {
       color: "#8ea1bf",
-
-      fontSize:
-        "clamp(13px, 0.9vw, 15px)",
+      fontSize: "clamp(13px, 0.9vw, 15px)",
     },
 
     "& .MuiInputLabel-root.Mui-focused": {
@@ -309,8 +288,7 @@ function ActivityLogs() {
     },
 
     "& input": {
-      fontSize:
-        "clamp(14px, 1vw, 17px)",
+      fontSize: "clamp(14px, 1vw, 17px)",
     },
 
     "& input::placeholder": {
@@ -319,8 +297,7 @@ function ActivityLogs() {
     },
 
     "& .MuiSelect-select": {
-      fontSize:
-        "clamp(14px, 1vw, 17px)",
+      fontSize: "clamp(14px, 1vw, 17px)",
     },
   };
 
@@ -827,13 +804,7 @@ function ActivityLogs() {
                             }}
                           >
                             <TableCell
-                              sx={{
-                                padding:
-                                  "clamp(10px, 1.15vh, 14px) 14px",
-
-                                borderBottom:
-                                  "1px solid rgba(61,87,135,0.45)",
-                              }}
+                              sx={tableCellStyle}
                             >
                               <Box
                                 sx={{
@@ -857,14 +828,10 @@ function ActivityLogs() {
 
                                 <Typography
                                   sx={{
+                                    ...tableTextStyle,
+
                                     color:
                                       colors.gray[100],
-
-                                    fontSize:
-                                      "clamp(14px, 1vw, 17px)",
-
-                                    whiteSpace:
-                                      "nowrap",
                                   }}
                                 >
                                   {formatDateTime(
@@ -875,13 +842,7 @@ function ActivityLogs() {
                             </TableCell>
 
                             <TableCell
-                              sx={{
-                                padding:
-                                  "clamp(10px, 1.15vh, 14px) 14px",
-
-                                borderBottom:
-                                  "1px solid rgba(61,87,135,0.45)",
-                              }}
+                              sx={tableCellStyle}
                             >
                               <Box
                                 sx={{
@@ -920,11 +881,7 @@ function ActivityLogs() {
 
                             <TableCell
                               sx={{
-                                padding:
-                                  "clamp(10px, 1.15vh, 14px) 14px",
-
-                                borderBottom:
-                                  "1px solid rgba(61,87,135,0.45)",
+                                ...tableCellStyle,
 
                                 maxWidth:
                                   "380px",
@@ -954,24 +911,14 @@ function ActivityLogs() {
                             </TableCell>
 
                             <TableCell
-                              sx={{
-                                padding:
-                                  "clamp(10px, 1.15vh, 14px) 14px",
-
-                                borderBottom:
-                                  "1px solid rgba(61,87,135,0.45)",
-                              }}
+                              sx={tableCellStyle}
                             >
                               <Typography
                                 sx={{
+                                  ...tableTextStyle,
+
                                   color:
                                     "#a5b4cd",
-
-                                  fontSize:
-                                    "clamp(14px, 1vw, 17px)",
-
-                                  whiteSpace:
-                                    "nowrap",
                                 }}
                               >
                                 {log.user ||
@@ -980,24 +927,14 @@ function ActivityLogs() {
                             </TableCell>
 
                             <TableCell
-                              sx={{
-                                padding:
-                                  "clamp(10px, 1.15vh, 14px) 14px",
-
-                                borderBottom:
-                                  "1px solid rgba(61,87,135,0.45)",
-                              }}
+                              sx={tableCellStyle}
                             >
                               <Typography
                                 sx={{
+                                  ...tableTextStyle,
+
                                   color:
                                     "#a5b4cd",
-
-                                  fontSize:
-                                    "clamp(14px, 1vw, 17px)",
-
-                                  whiteSpace:
-                                    "nowrap",
                                 }}
                               >
                                 {log.homeIpAddress ||
